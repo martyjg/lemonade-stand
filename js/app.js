@@ -16,8 +16,9 @@
 lemonade = {}
 
 var 
-
 runningTotal = 1000, numOfCustomers = 20,
+
+possibleWeather = ["raining", "cloudy", "warm", "hot", "stormy"],
 
 iceQuantity, lemonsQuantity, sugarQuantity, todaysPrice,
 
@@ -28,11 +29,62 @@ iceToLemonade, lemonsToLemonade, sugarToLemonade, lemonadeProduced,
 salesMade, moneyMade;
 
 var day = 1;
-var limiter = "";
 var surplusLemons, surplusSugar;
 
+getReportedWeather = function() {
+  var random = Math.random();
+  if (random < 0.15) {
+    weatherReport = possibleWeather[0];
+    console.log("Weather Forecast: The weather is " + weatherReport + " today.")
+  } else if (random >= 0.15 && random < 0.35) {
+    weatherReport = 1;
+    console.log("Weather Forecast: The weather is " + possibleWeather[1] + " today.")
+  } else if (random >= 0.35 && random < 0.65) {
+    weatherReport = 2;
+    console.log("Weather Forecast: The weather is " + possibleWeather[2] + " today.")
+  } else if (random >= 0.65 && random < 0.95) {
+    weatherReport = 3;
+    console.log("Weather Forecast: The weather is " + possibleWeather[3] + " today.")
+  } else {
+    weatherReport = possibleWeather[4];
+    console.log("Weather Forecast: The weather is " + weatherReport + " today.")
+  }
+  if (day === 1) {
+    getInitialStock();
+  } else {
+    stockTotal();
+  }
+};
 
-getStock = function() {
+getActualWeather = function() {
+  var random = Math.random();
+  if (weatherReport === "raining") {
+    if (random < 0.1) {
+      weatherActual = "cloudy";
+    } else if (random >= 0.1 && random < 0.8) {
+      weatherActual = weatherReport;
+    } else {
+      weatherActual = "stormy";
+    }
+  } else if (weatherReport === "stormy") {  
+    weatherActual = weatherReport;
+  } else {
+    for (var i = 1; i < possibleWeather.length - 1; i++) {
+      if (random < 0.15) {
+        weatherActual = possibleWeather[weatherReport - 1];
+      } else if (random >= 0.15 && random < 0.95) {
+        weatherActual = possibleWeather[weatherReport];
+      } else {
+        weatherActual = possibleWeather[weatherReport + 1];
+      }
+    };
+  }
+  console.log("The weather today is " + weatherActual + ".")
+  makeLemonade();
+}
+
+
+getInitialStock = function() {
   iceQuantity = parseInt(prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)"));
 
   lemonsQuantity = parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
@@ -45,7 +97,6 @@ getStock = function() {
 }
 
 stockTotal = function() {
-  debugger
   console.log("ice: " + iceQuantity + "kg")
   console.log("lemons: " + lemonsQuantity + "kg")
   console.log("sugar: " + sugarQuantity + "kg")
@@ -64,26 +115,22 @@ stockTotal = function() {
   morningTotal = runningTotal - stockCost;
   console.log("You begin the day with a total of " + morningTotal + ".");
 
-  makeLemonade();
+  getActualWeather();
 }
 
 makeLemonade = function() {
-  debugger
   iceToLemonade = iceQuantity * 10;
   lemonsToLemonade = lemonsQuantity * 10;
   sugarToLemonade = sugarQuantity * 20;
 
   if (iceToLemonade <= lemonsToLemonade && iceToLemonade <= sugarToLemonade) {
-    limiter = "ice";
     lemonadeProduced = iceToLemonade;
     surplusLemons = lemonsToLemonade - lemonadeProduced;
     surplusSugar = sugarToLemonade - lemonadeProduced;
   } else if (lemonsToLemonade <= iceToLemonade && lemonsToLemonade <= sugarToLemonade) {
-    limiter = "lemons";
     lemonadeProduced = lemonsToLemonade;
     surplusSugar = sugarToLemonade - lemonadeProduced;
   } else {
-    limiter = "sugar";
     lemonadeProduced = sugarToLemonade;
     surplusLemons = lemonsToLemonade - lemonadeProduced;
   }
@@ -92,7 +139,6 @@ makeLemonade = function() {
 }
 
 calculateSales = function() {
-  debugger
   if (lemonadeProduced >= numOfCustomers) {
     salesMade = numOfCustomers;
   } else {
@@ -113,7 +159,6 @@ calculateSales = function() {
 }
 
 surplusStock = function() {
-  debugger
   if (day === 1) {
     return;
   } else {
@@ -124,7 +169,7 @@ surplusStock = function() {
     sugarQuantity =  (surplusSugar / 20) + parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
     todaysPrice = prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)");
   }
-  stockTotal();
+  getReportedWeather();
 }
 
 
