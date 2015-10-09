@@ -15,52 +15,21 @@
 
 lemonade = {}
 
-var iceQuantity, lemonsQuantity, sugarQuantity, todaysPrice;
+var 
 
-stocksAndSales = function() {
+runningTotal = 1000, numOfCustomers = 20,
 
-  var runningTotal = 1000;
+iceQuantity, lemonsQuantity, sugarQuantity, todaysPrice,
 
-  var iceCost = iceQuantity * 100;
-  var lemonsCost = lemonsQuantity * 200;
-  var sugarCost = sugarQuantity * 100;
+iceCost, lemonsCost, sugarCost, stockCost, morningTotal,
 
-  var iceToLemonade = iceQuantity * 10;
-  var lemonsToLemonade = lemonsQuantity * 10;
-  var sugarToLemonade = sugarQuantity * 20;
+iceToLemonade, lemonsToLemonade, sugarToLemonade, lemonadeProduced,
 
-  var stockCost = iceCost + lemonsCost + sugarCost;
+salesMade, moneyMade;
 
-  console.log("You spent " + stockCost + " on stock today.")
-  var morningTotal = runningTotal - stockCost;
-  console.log("You begin the day with a total of " + morningTotal);
 
-  if (iceToLemonade <= lemonsToLemonade && iceToLemonade <= sugarToLemonade) {
-    var lemonadeProduced = iceToLemonade;
-  } else if (lemonsToLemonade <= iceToLemonade && lemonsToLemonade <= sugarToLemonade) {
-    var lemonadeProduced = lemonsToLemonade;
-  } else {
-    var lemonadeProduced = sugarToLemonade;
-  }
+getStock = function() {
 
-  var numOfCustomers = 20;
-
-  if (lemonadeProduced >= numOfCustomers) {
-    var salesMade = numOfCustomers;
-  } else {
-    var salesMade = lemonadeProduced;
-  }
-
-  var moneyMade = salesMade * todaysPrice;
-
-  console.log("You have made " + moneyMade + " today.")
-
-  var runningTotal = (runningTotal - stockCost) + moneyMade;
-
-  console.log("You have " + runningTotal + ".")
-}
-
-getStock = function () {
   iceQuantity = prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)");
 
   lemonsQuantity = prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)");
@@ -68,5 +37,58 @@ getStock = function () {
   sugarQuantity = prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)");
 
   todaysPrice = prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)");
+
+  stockTotal();
 }
+
+stockTotal = function() {
+
+  iceCost = iceQuantity * 100;
+  lemonsCost = lemonsQuantity * 200;
+  sugarCost = sugarQuantity * 100;
+
+  stockCost = iceCost + lemonsCost + sugarCost;
+
+  console.log("You spent " + stockCost + " on stock today.")
+  morningTotal = runningTotal - stockCost;
+  console.log("You begin the day with a total of " + morningTotal);
+
+  produceLemonade();
+}
+
+produceLemonade = function() {
+
+  iceToLemonade = iceQuantity * 10;
+  lemonsToLemonade = lemonsQuantity * 10;
+  sugarToLemonade = sugarQuantity * 20;
+
+  if (iceToLemonade <= lemonsToLemonade && iceToLemonade <= sugarToLemonade) {
+    lemonadeProduced = iceToLemonade;
+  } else if (lemonsToLemonade <= iceToLemonade && lemonsToLemonade <= sugarToLemonade) {
+    lemonadeProduced = lemonsToLemonade;
+  } else {
+    lemonadeProduced = sugarToLemonade;
+  }
+
+  calculateSales();
+}
+
+calculateSales = function() {
+
+   if (lemonadeProduced >= numOfCustomers) {
+    salesMade = numOfCustomers;
+  } else {
+    salesMade = lemonadeProduced;
+  }
+
+  moneyMade = salesMade * todaysPrice;
+
+  console.log("You have made " + moneyMade + " today.")
+
+  runningTotal = morningTotal + moneyMade;
+
+  console.log("You have " + runningTotal + ".")
+}
+
+getStock();
 
