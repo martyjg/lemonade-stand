@@ -13,21 +13,13 @@
 // The user repeats this process over several days, trying to maximise profitand avoid going bust.
 // A target must be reached by a final day in order for the player to have succeeded.
 
+lemonade = {}
+
+var iceQuantity, lemonsQuantity, sugarQuantity, todaysPrice;
+
 stocksAndSales = function() {
 
-  var startingCash = 1000;
-
-  var iceQuantity = 2;
-// prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.");
-
-  var lemonsQuantity = 2;
-// prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.");
-
-  var sugarQuantity = 1;
-// prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.");
-
-  var todaysPrice = 80;
-// prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80");
+  var runningTotal = 1000;
 
   var iceCost = iceQuantity * 100;
   var lemonsCost = lemonsQuantity * 200;
@@ -40,6 +32,8 @@ stocksAndSales = function() {
   var stockCost = iceCost + lemonsCost + sugarCost;
 
   console.log("You spent " + stockCost + " on stock today.")
+  var morningTotal = runningTotal - stockCost;
+  console.log("You begin the day with a total of " + morningTotal);
 
   if (iceToLemonade <= lemonsToLemonade && iceToLemonade <= sugarToLemonade) {
     var lemonadeProduced = iceToLemonade;
@@ -49,7 +43,7 @@ stocksAndSales = function() {
     var lemonadeProduced = sugarToLemonade;
   }
 
-  var numOfCustomers = 40;
+  var numOfCustomers = 20;
 
   if (lemonadeProduced >= numOfCustomers) {
     var salesMade = numOfCustomers;
@@ -61,7 +55,18 @@ stocksAndSales = function() {
 
   console.log("You have made " + moneyMade + " today.")
 
-  var totalCash = (startingCash - stockCost) + moneyMade;
+  var runningTotal = (runningTotal - stockCost) + moneyMade;
 
-  console.log("You have " + totalCash + ".")
+  console.log("You have " + runningTotal + ".")
 }
+
+getStock = function () {
+  iceQuantity = prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)");
+
+  lemonsQuantity = prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)");
+
+  sugarQuantity = prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)");
+
+  todaysPrice = prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)");
+}
+
