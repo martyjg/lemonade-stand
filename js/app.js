@@ -16,11 +16,11 @@
 lemonade = {}
 
 var 
-runningTotal = 1000, numOfCustomers = 20,
+runningTotal = 1000, numOfCustomers = 10,
 
-possibleWeather = ["raining", "cloudy", "warm", "hot", "stormy"],
+possibleWeather = ["stormy", "raining", "cloudy", "warm", "hot"],
 
-iceQuantity, lemonsQuantity, sugarQuantity, todaysPrice,
+iceQuantity, lemonsQuantity = {fresh: 0, oneDay: 0}, sugarQuantity, todaysPrice,
 
 iceCost, lemonsCost, sugarCost, stockCost, morningTotal,
 
@@ -33,16 +33,16 @@ var surplusLemons, surplusSugar;
 
 getReportedWeather = function() {
   var random = Math.random();
-  if (random < 0.15) {
+  if (random < 0.05) {
     weatherReport = possibleWeather[0];
     console.log("Weather Forecast: The weather is " + weatherReport + " today.")
-  } else if (random >= 0.15 && random < 0.35) {
+  } else if (random >= 0.05 && random < 0.25) {
     weatherReport = 1;
     console.log("Weather Forecast: The weather is " + possibleWeather[1] + " today.")
-  } else if (random >= 0.35 && random < 0.65) {
+  } else if (random >= 0.25 && random < 0.55) {
     weatherReport = 2;
     console.log("Weather Forecast: The weather is " + possibleWeather[2] + " today.")
-  } else if (random >= 0.65 && random < 0.95) {
+  } else if (random >= 0.55 && random < 0.90) {
     weatherReport = 3;
     console.log("Weather Forecast: The weather is " + possibleWeather[3] + " today.")
   } else {
@@ -80,6 +80,13 @@ getActualWeather = function() {
     };
   }
   console.log("The weather today is " + weatherActual + ".")
+  calculateCustomers();
+}
+
+calculateCustomers = function() {
+  debugger
+  var multiplier = possibleWeather.indexOf(weatherActual);
+  numOfCustomers = multiplier * numOfCustomers;
   makeLemonade();
 }
 
@@ -87,7 +94,7 @@ getActualWeather = function() {
 getInitialStock = function() {
   iceQuantity = parseInt(prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)"));
 
-  lemonsQuantity = parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
+  lemonsQuantity.fresh = parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
 
   sugarQuantity = parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
 
@@ -98,15 +105,15 @@ getInitialStock = function() {
 
 stockTotal = function() {
   console.log("ice: " + iceQuantity + "kg")
-  console.log("lemons: " + lemonsQuantity + "kg")
+  console.log("lemons: " + (lemonsQuantity.fresh + lemonsQuantity.oneDay) + "kg")
   console.log("sugar: " + sugarQuantity + "kg")
   if (day === 1) {
     iceCost = iceQuantity * 100;
-    lemonsCost = lemonsQuantity * 200;
+    lemonsCost = (lemonsQuantity.fresh + lemonsQuantity.oneDay) * 200;
     sugarCost = sugarQuantity * 100;
   } else {
     iceCost = iceQuantity * 100;
-    lemonsCost = (lemonsQuantity - (surplusLemons / 10)) * 200;
+    lemonsCost = ((lemonsQuantity.fresh + lemonsQuantity.oneDay) - (surplusLemons / 10)) * 200;
     sugarCost = (sugarQuantity - (surplusSugar / 20)) * 100;
   }
 
@@ -120,7 +127,7 @@ stockTotal = function() {
 
 makeLemonade = function() {
   iceToLemonade = iceQuantity * 10;
-  lemonsToLemonade = lemonsQuantity * 10;
+  lemonsToLemonade = (lemonsQuantity.fresh + lemonsQuantity.oneDay) * 10;
   sugarToLemonade = sugarQuantity * 20;
 
   if (iceToLemonade <= lemonsToLemonade && iceToLemonade <= sugarToLemonade) {
@@ -147,14 +154,17 @@ calculateSales = function() {
 
   moneyMade = salesMade * todaysPrice;
 
-  console.log("You have made " + moneyMade + " today.")
+  console.log("You sold " + salesMade + " lemonades today. You have made " + moneyMade + ".")
 
   runningTotal = morningTotal + moneyMade;
 
   console.log("You have " + runningTotal + ".")
 
   day++;
+  numOfCustomers = 10;
   iceQuantity = 0;
+  lemonsQuantity.oneDay = lemonsQuantity.fresh
+  lemonsQuantity.fresh = 0;
   surplusStock();
 }
 
