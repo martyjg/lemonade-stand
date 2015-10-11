@@ -26,13 +26,15 @@ iceCost, lemonsCost, sugarCost, stockCost, morningTotal,
 
 iceToLemonade, lemonsToLemonade, sugarToLemonade, lemonadeProduced,
 
+locationSelect,
+
 salesMade, moneyMade;
 
 var day = 1;
 var surplusLemons, surplusSugar;
 
 getReportedWeather = function() {
-  
+
   var random = Math.random();
   if (random < 0.05) {
     weatherReport = possibleWeather[0];
@@ -53,9 +55,15 @@ getReportedWeather = function() {
   if (day === 1) {
     getInitialStock();
   } else {
-    stockTotal();
+    getLocation();
   }
 };
+
+getLocation = function() {
+  debugger
+  locationSelect = prompt("where would you like to set up the lemonade stand today? (D)eptford Market: 100, (Br)ixton Market: 300, (S)pitalfields Market: 500, (Bo)rough Market: 900.");
+  stockTotal();
+}
 
 getActualWeather = function() {
   var random = Math.random();
@@ -85,8 +93,27 @@ getActualWeather = function() {
 }
 
 calculateCustomers = function() {
+  debugger
   var multiplier = possibleWeather.indexOf(weatherActual);
   numOfCustomers = multiplier * numOfCustomers;
+
+  switch (locationSelect) {
+  case "D":
+    multiplier = 1
+    break;    
+  case "Br":
+    multiplier = 1.5
+    break;    
+  case "S":
+    multiplier = 2
+    break;    
+  case "Bo":
+    multiplier = 2.5
+    break;
+  }
+
+  numOfCustomers = multiplier * numOfCustomers;
+
   makeLemonade();
 }
 
@@ -126,10 +153,9 @@ stockTotal = function() {
 }
 
 makeLemonade = function() {
-  debugger
   iceToLemonade = iceQuantity * 10;
-  fLemonsToLemonade = lemonsQuantity.fresh * 10;
-  oLemonsToLemonade = lemonsQuantity.oneDay * 10;
+  var fLemonsToLemonade = lemonsQuantity.fresh * 10;
+  var oLemonsToLemonade = lemonsQuantity.oneDay * 10;
   lemonsToLemonade = fLemonsToLemonade + oLemonsToLemonade;
   sugarToLemonade = sugarQuantity * 20;
 
@@ -187,7 +213,6 @@ calculateSales = function() {
 }
 
 surplusStock = function() {
-  debugger
   console.log(" At the end of the day, there is " + lemonsQuantity.fresh + " fresh lemons and " + lemonsQuantity.oneDay + " day old lemons.") 
   console.log("There is " + sugarQuantity + " sugar and " + iceQuantity + " ice.") 
   if (day === 1) {
