@@ -32,6 +32,7 @@ var day = 1;
 var surplusLemons, surplusSugar;
 
 getReportedWeather = function() {
+  
   var random = Math.random();
   if (random < 0.05) {
     weatherReport = possibleWeather[0];
@@ -58,13 +59,13 @@ getReportedWeather = function() {
 
 getActualWeather = function() {
   var random = Math.random();
-  if (weatherReport === "raining") {
+  if (weatherReport === "hot") {
     if (random < 0.1) {
-      weatherActual = "cloudy";
+      weatherActual = "stormy";
     } else if (random >= 0.1 && random < 0.8) {
       weatherActual = weatherReport;
     } else {
-      weatherActual = "stormy";
+      weatherActual = "warm";
     }
   } else if (weatherReport === "stormy") {  
     weatherActual = weatherReport;
@@ -84,7 +85,6 @@ getActualWeather = function() {
 }
 
 calculateCustomers = function() {
-  debugger
   var multiplier = possibleWeather.indexOf(weatherActual);
   numOfCustomers = multiplier * numOfCustomers;
   makeLemonade();
@@ -105,7 +105,7 @@ getInitialStock = function() {
 
 stockTotal = function() {
   console.log("ice: " + iceQuantity + "kg")
-  console.log("lemons: " + (lemonsQuantity.fresh + lemonsQuantity.oneDay) + "kg")
+  console.log("Fresh lemons: " + lemonsQuantity.fresh + "kg. 1dayLemons: " + lemonsQuantity.oneDay + "kg")
   console.log("sugar: " + sugarQuantity + "kg")
   if (day === 1) {
     iceCost = iceQuantity * 100;
@@ -126,22 +126,40 @@ stockTotal = function() {
 }
 
 makeLemonade = function() {
+  debugger
   iceToLemonade = iceQuantity * 10;
-  lemonsToLemonade = (lemonsQuantity.fresh + lemonsQuantity.oneDay) * 10;
+  fLemonsToLemonade = lemonsQuantity.fresh * 10;
+  oLemonsToLemonade = lemonsQuantity.oneDay * 10;
+  lemonsToLemonade = fLemonsToLemonade + oLemonsToLemonade;
   sugarToLemonade = sugarQuantity * 20;
 
   if (iceToLemonade <= lemonsToLemonade && iceToLemonade <= sugarToLemonade) {
     lemonadeProduced = iceToLemonade;
-    surplusLemons = lemonsToLemonade - lemonadeProduced;
+    surplusLemons = oLemonsToLemonade - lemonadeProduced;
+    if (surplusLemons < 0) {
+      surplusLemons = surplusLemons + fLemonsToLemonade;
+      lemonsQuantity.fresh = surplusLemons / 10;
+    } else if (surplusLemons > 0) {
+      surplusLemons = surplusLemons + fLemonsToLemonade;
+    } else {
+      surplusLemons = fLemonsToLemonade
+    }
     surplusSugar = sugarToLemonade - lemonadeProduced;
   } else if (lemonsToLemonade <= iceToLemonade && lemonsToLemonade <= sugarToLemonade) {
     lemonadeProduced = lemonsToLemonade;
     surplusSugar = sugarToLemonade - lemonadeProduced;
   } else {
     lemonadeProduced = sugarToLemonade;
-    surplusLemons = lemonsToLemonade - lemonadeProduced;
+    surplusLemons = oLemonsToLemonade - lemonadeProduced;
+    if (surplusLemons < 0) {
+      surplusLemons = surplusLemons + fLemonsToLemonade;
+      lemonsQuantity.fresh = surplusLemons / 10;
+    } else if (surplusLemons > 0) {
+      surplusLemons = surplusLemons + fLemonsToLemonade;
+    } else {
+      surplusLemons = fLemonsToLemonade
+    }
   }
-
   calculateSales();
 }
 
@@ -169,13 +187,16 @@ calculateSales = function() {
 }
 
 surplusStock = function() {
+  debugger
+  console.log(" At the end of the day, there is " + lemonsQuantity.fresh + " fresh lemons and " + lemonsQuantity.oneDay + " day old lemons.") 
+  console.log("There is " + sugarQuantity + " sugar and " + iceQuantity + " ice.") 
   if (day === 1) {
     return;
   } else {
     console.log("You have enough surplus lemons from yesterday to produce " + surplusLemons + " glasses of lemonade.")
     console.log("You have enough surplus sugar from yesterday to produce " + surplusSugar + " glasses of lemonade.")
     iceQuantity = parseInt(prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)"));
-    lemonsQuantity = (surplusLemons / 10) + parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
+    lemonsQuantity.fresh = parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
     sugarQuantity =  (surplusSugar / 20) + parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
     todaysPrice = prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)");
   }
