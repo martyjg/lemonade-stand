@@ -1,0 +1,77 @@
+/*
+FFE130 Yellow
+8CBA80 Green
+FF2ECC Pink
+4C5B5C Grey
+3F5478 Blue
+*/
+
+body {
+  background-color: #4C5B5C;
+}
+
+.user-input-screen {
+  width: 480px;
+  height: 640px;
+  margin: 0 auto;
+  padding: 5px;
+  background-color: #8CBA80;
+}
+
+.header-box {
+  width: 70%;
+  height: 12%;
+  margin: 20px auto;
+  border: 6px solid #FFE130;
+}
+
+.ingredients-display {
+  width: 70%;
+  height: 25%;
+  margin: 15px auto;
+  border: 6px solid #FFE130;
+}
+
+.price-location-display {
+  width: 50%;
+  height: 25%;
+  margin: 15px auto;
+  border: 6px solid #FFE130;
+}
+
+.start-button {
+  width: 30%;
+  height: 10%;
+  margin: 30px auto;
+  border: 6px solid #FFE130;
+}
+
+.ingredients-box {
+  box-sizing: border-box;
+  float: left;
+  width: 33%;
+  height: 110px;
+  border: 4px solid #FF2ECC;
+}
+
+.user-ingredient {
+  width: 33%;
+  float: left;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.decrement {
+  display: inline-block;
+}
+
+.ingredient-input {
+  display: inline-block;
+}
+.increment {
+  display: inline-block;
+}
+
+
+
+

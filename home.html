@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Lemonade Stand</title>
+  <link rel="stylesheet" type="text/css" href="./css/reset.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
   <script type="text/javascript" src="./js/app.js"></script>
 </head>
 <body>
@@ -17,17 +19,29 @@
       </div>
 
       <div class="ingredients-display">
-        <div class="lemons-box">
-          <div class="lemons-image">LEMONS IMAGE</div>
-          <div class="lemon-input">QUANTITY OF LEMONS</div>
+        <div class="ingredients-box" id="lemon">
+          <div class="lemons-image">L.image</div>
         </div>
-        <div class="ice-box">
-          <div class="ice-image">ICE IMAGE</div>
-          <div class="ice-input">QUANTITY OF ICE</div>
+        <div class="ingredients-box" id="ice">
+          <div class="ice-image">I.image</div>
         </div>
-        <div class="sugar-box">
-          <div class="sugar-image">SUGAR IMAGE</div>
-          <div class="sugar-input">QUANTITY OF SUGAR</div>
+        <div class="ingredients-box" id="sugar">
+          <div class="sugar-image">S.image</div>
+        </div>
+        <div class="user-ingredient">
+          <div class="decrement" id="decrement-lemon"><</div>
+          <div class="ingredient-input" id="input-lemon">LEMONS</div>
+          <div class="increment" id="increment-lemon">></div>
+        </div>
+        <div class="user-ingredient">
+          <div class="decrement" id="decrement-ice"><</div>
+          <div class="ingredient-input" id="input-ice">ICE</div>
+          <div class="increment" id="increment-ice">></div>
+        </div>
+        <div class="user-ingredient">
+          <div class="decrement" id="decrement-sugar"><</div>
+          <div class="ingredient-input" id="input-sugar">SUGAR</div>
+          <div class="increment" id="increment-sugar">></div>
         </div>
       </div>
 
