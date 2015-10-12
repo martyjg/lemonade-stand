@@ -209,6 +209,7 @@ makeLemonade = function() {
 }
 
 calculateSales = function() {
+  debugger
   if (lemonadeProduced >= numOfCustomers) {
     salesMade = numOfCustomers;
   } else {
@@ -227,7 +228,12 @@ calculateSales = function() {
     runningTotal = morningTotal + moneyMade;
   }
 
-  console.log("You have " + runningTotal + ".")
+  if (runningTotal < 0) {
+    console.log("Your balance is " + runningTotal + ". GAME OVER SORRY.")
+    return;
+  } else {
+    console.log("You have " + runningTotal + ".")
+  }
 
   day++;
   numOfCustomers = 10;
