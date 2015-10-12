@@ -23,7 +23,7 @@ $(function() {
 
   possibleWeather = ["stormy", "raining", "cloudy", "warm", "hot"], reportDay,
 
-  iceQuantity, lemonsQuantity = {fresh: 0, oneDay: 0}, sugarQuantity, todaysPrice,
+  iceQuantity, lemonsQuantity = {fresh: 0, oneDay: 0}, sugarQuantity, $todaysPrice,
 
   iceCost, lemonsCost, sugarCost, stockCost, morningTotal,
 
@@ -37,37 +37,60 @@ $(function() {
   var surplusLemons, surplusSugar;
 
   setup = function() {
+    $(".lemonade-stand-display").hide();
+    $(".user-input-screen").show();
     getReportedWeather();
     addIncDecButtons();
+    addStartButton();
+  }
+
+  addStartButton = function() {
+    $(".start-button").on("click", function() {
+      $(".user-input-screen").hide();
+      $(".lemonade-stand-display").show();
+    })
   }
 
   addIncDecButtons = function() {
-    var lemonNum = $("#input-lemon").text();
+    var $lemonNum = parseInt($("#input-lemon").text());
     $("#decrement-lemon").on("click", function() {
-      lemonNum--
-      $("#input-lemon").text(lemonNum);
+      $lemonNum--
+      $("#input-lemon").text($lemonNum);
     })
     $("#increment-lemon").on("click", function() {
-      lemonNum++
-      $("#input-lemon").text(lemonNum)
+      $lemonNum++
+      $("#input-lemon").text($lemonNum)
     })
-    var iceNum = $("#input-ice").text();
+    var $iceNum = parseInt($("#input-ice").text());
     $("#decrement-ice").on("click", function() {
-      iceNum--
-      $("#input-ice").text(iceNum)
+      $iceNum--
+      $("#input-ice").text($iceNum)
     })
     $("#increment-ice").on("click", function() {
-      iceNum++
-      $("#input-ice").text(iceNum)
+      $iceNum++
+      $("#input-ice").text($iceNum)
     })
-    var sugarNum = $("#input-sugar").text();
+    var $sugarNum = parseInt($("#input-sugar").text());
     $("#decrement-sugar").on("click", function() {
-      sugarNum--
-      $("#input-sugar").text(sugarNum)
+      $sugarNum--
+      $("#input-sugar").text($sugarNum)
     })
     $("#increment-sugar").on("click", function() {
-      sugarNum++
-      $("#input-sugar").text(sugarNum)
+      $sugarNum++
+      $("#input-sugar").text($sugarNum)
+    })
+
+    $(".price-input").text(50);
+    $todaysPrice = parseInt($(".price-input").text());
+    $("#decrement-price").on("click", function() {
+      $todaysPrice -= 10;
+      $(".price-input").text($todaysPrice)
+      console.log("the click is working")
+      console.log($todaysPrice)
+    })
+    $("#increment-price").on("click", function() {
+      $todaysPrice += 10;
+      $(".price-input").text($todaysPrice)
     })
   }
 
