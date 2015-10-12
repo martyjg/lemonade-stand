@@ -18,7 +18,7 @@ lemonade = {}
 var 
 runningTotal = 1000, numOfCustomers = 10,
 
-possibleWeather = ["stormy", "raining", "cloudy", "warm", "hot"],
+possibleWeather = ["stormy", "raining", "cloudy", "warm", "hot"], reportDay,
 
 iceQuantity, lemonsQuantity = {fresh: 0, oneDay: 0}, sugarQuantity, todaysPrice,
 
@@ -36,31 +36,35 @@ var surplusLemons, surplusSugar;
 getReportedWeather = function() {
 
   var random = Math.random();
+  if (day === 1) {
+    reportDay = " today."
+  } else {
+    reportDay = " tomorrow."
+  }
   if (random < 0.05) {
     weatherReport = possibleWeather[0];
-    console.log("Weather Forecast: The weather is " + weatherReport + " today.")
+    console.log("Weather Forecast: The weather is " + weatherReport + reportDay)
   } else if (random >= 0.05 && random < 0.25) {
     weatherReport = 1;
-    console.log("Weather Forecast: The weather is " + possibleWeather[1] + " today.")
+    console.log("Weather Forecast: The weather is " + possibleWeather[1] + reportDay)
   } else if (random >= 0.25 && random < 0.55) {
     weatherReport = 2;
-    console.log("Weather Forecast: The weather is " + possibleWeather[2] + " today.")
+    console.log("Weather Forecast: The weather is " + possibleWeather[2] + reportDay)
   } else if (random >= 0.55 && random < 0.90) {
     weatherReport = 3;
-    console.log("Weather Forecast: The weather is " + possibleWeather[3] + " today.")
+    console.log("Weather Forecast: The weather is " + possibleWeather[3] + reportDay)
   } else {
     weatherReport = possibleWeather[4];
-    console.log("Weather Forecast: The weather is " + weatherReport + " today.")
+    console.log("Weather Forecast: The weather is " + weatherReport + reportDay)
   }
   if (day === 1) {
     getInitialStock();
   } else {
-    getLocation();
+    surplusStock();
   }
 };
 
 getLocation = function() {
-  debugger
   locationSelect = prompt("where would you like to set up the lemonade stand today? (D)eptford Market: 100, (Br)ixton Market: 300, (S)pitalfields Market: 500, (Bo)rough Market: 900.");
   stockTotal();
 }
@@ -93,8 +97,7 @@ getActualWeather = function() {
 }
 
 calculateCustomers = function() {
-  debugger
-  var multiplier = possibleWeather.indexOf(weatherActual);
+  var multiplier = (possibleWeather.indexOf(weatherActual)) / 2;
   numOfCustomers = multiplier * numOfCustomers;
 
   if (day !== 1) {
@@ -119,6 +122,17 @@ calculateCustomers = function() {
 
     numOfCustomers = multiplier * numOfCustomers;
   }
+
+  if (todaysPrice < 10) {
+    numOfCustomers = numOfCustomers;
+  } else if (todaysPrice > 100) {
+    numOfCustomers = 2;
+  } else {
+    numOfCustomers = (500 / todaysPrice);
+  }
+
+  numOfCustomers = Math.floor(numOfCustomers);
+
   makeLemonade();
 }
 
@@ -195,7 +209,6 @@ makeLemonade = function() {
 }
 
 calculateSales = function() {
-  debugger
   if (lemonadeProduced >= numOfCustomers) {
     salesMade = numOfCustomers;
   } else {
@@ -221,7 +234,7 @@ calculateSales = function() {
   iceQuantity = 0;
   lemonsQuantity.oneDay = lemonsQuantity.fresh
   lemonsQuantity.fresh = 0;
-  surplusStock();
+  getReportedWeather();
 }
 
 surplusStock = function() {
@@ -237,7 +250,7 @@ surplusStock = function() {
     sugarQuantity =  (surplusSugar / 20) + parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
     todaysPrice = prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)");
   }
-  getReportedWeather();
+  getLocation();
 }
 
 
