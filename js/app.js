@@ -26,7 +26,7 @@ iceCost, lemonsCost, sugarCost, stockCost, morningTotal,
 
 iceToLemonade, lemonsToLemonade, sugarToLemonade, lemonadeProduced,
 
-locationSelect,
+locationSelect, rent,
 
 salesMade, moneyMade;
 
@@ -97,23 +97,28 @@ calculateCustomers = function() {
   var multiplier = possibleWeather.indexOf(weatherActual);
   numOfCustomers = multiplier * numOfCustomers;
 
-  switch (locationSelect) {
-  case "D":
-    multiplier = 1
-    break;    
-  case "Br":
-    multiplier = 1.5
-    break;    
-  case "S":
-    multiplier = 2
-    break;    
-  case "Bo":
-    multiplier = 2.5
-    break;
+  if (day !== 1) {
+    switch (locationSelect) {
+      case "D":
+      multiplier = 1
+      rent = 100;
+      break;    
+      case "Br":
+      multiplier = 1.5
+      rent = 300;
+      break;    
+      case "S":
+      multiplier = 2
+      rent = 500;
+      break;    
+      case "Bo":
+      multiplier = 2.5
+      rent = 900;
+      break;
+    }
+
+    numOfCustomers = multiplier * numOfCustomers;
   }
-
-  numOfCustomers = multiplier * numOfCustomers;
-
   makeLemonade();
 }
 
@@ -190,6 +195,7 @@ makeLemonade = function() {
 }
 
 calculateSales = function() {
+  debugger
   if (lemonadeProduced >= numOfCustomers) {
     salesMade = numOfCustomers;
   } else {
@@ -200,7 +206,13 @@ calculateSales = function() {
 
   console.log("You sold " + salesMade + " lemonades today. You have made " + moneyMade + ".")
 
-  runningTotal = morningTotal + moneyMade;
+  if (day !== 1) {
+    console.log("You spent " + rent + " on rent today")
+
+    runningTotal = morningTotal + moneyMade - rent;
+  } else {
+    runningTotal = morningTotal + moneyMade;
+  }
 
   console.log("You have " + runningTotal + ".")
 
