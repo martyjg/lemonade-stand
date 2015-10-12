@@ -15,6 +15,9 @@
 
 $(function() {
 
+  $(".user-input-screen").hide();
+  $(".lemonade-stand-display").show();
+
 
   lemonade = {}
 
