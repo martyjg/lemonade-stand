@@ -6,8 +6,8 @@ FF2ECC Pink
 3F5478 Blue
 */
 @font-face {
-    font-family: gameFont;
-    src: url(./ARCADECLASSIC.TTF);
+  font-family: gameFont;
+  src: url(./ARCADECLASSIC.TTF);
 }
 
 body {
@@ -63,6 +63,7 @@ body {
   text-align: center;
   border: 4px solid #FF2ECC;
   line-height: 40px;
+  font-size: 40px;
 }
 
 .day-weather-box {
@@ -101,10 +102,18 @@ body {
 }
 
 .ingredient-input {
+  margin: 0 5px;
   display: inline-block;
 }
 .increment {
   display: inline-block;
+}
+
+.lemons-image {
+  height: 100%;
+  background: url(../lemon.png);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .lemonade-price-entry {
@@ -120,6 +129,7 @@ body {
   width: 50%;
   height: 100%;
   border: 4px solid #FFE130;
+
 }
 
 .user-price-box {
@@ -135,6 +145,7 @@ body {
 }
 
 .price-input {
+  margin: 0 5px;
   display: inline-block;
 }
 
@@ -147,6 +158,11 @@ body {
   border: 4px solid #FF2ECC;
 }
 
+.increment, .decrement {
+  width: 15px;
+  height: 15px;
+  background-color: #FFE130
+}
 
 
 
