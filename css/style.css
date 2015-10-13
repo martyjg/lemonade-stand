@@ -27,15 +27,21 @@ body {
   color: #3F5478;
 }
 
+section, p {
+  font-family: Lucida Console;
+  text-align: justify;
+  margin: 15px auto;
+}
+
+section {
+  padding: 0 10px;
+}
+
 header {
   text-align: center;
   font-size: 50px;
   background-color: #FFE130;
   margin: 10px;
-}
-
-p {
-  font-family: verdana;
 }
 
 .header-box,
@@ -74,6 +80,21 @@ p {
   background-image: url(../hot.gif), url(../time-animation.gif);
 }
 
+#day-animation-cloudy {
+  background-image: url(../cloudy.gif), url(../time-animation.gif);
+}
+
+#day-animation-warm {
+  background-image: url(../warm.gif), url(../time-animation.gif);
+}
+
+#day-animation-raining {
+  background-image: url(../raining.gif), url(../time-animation.gif);
+}
+
+#day-animation-stormy {
+  background-image: url(../stormy.gif), url(../time-animation.gif);
+}
 
 .day-start-numbers {
   box-sizing: border-box;
@@ -161,7 +182,7 @@ p {
   width: 30%;
 }
 
-.end-day-button, .start-button {
+.end-day-button, .start-button, .start {
   box-sizing: border-box;
   /*width: 30%;*/
   height: 10%;
@@ -335,7 +356,8 @@ p {
 }
 
 .start-button:hover,
-.end-day-button:hover {
+.end-day-button:hover,
+.start:hover {
   background: #FF3030;
   border-color:#EA1717;
   color: white;

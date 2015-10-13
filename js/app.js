@@ -56,9 +56,19 @@ var numOfCustomers  = 10,
     delay = 3150; //1 seconds
 
 function setup() {
+  $(".lemonade-stand-display").hide();
+  $(".user-input-screen").hide();
+  $(".instructions").show();
+  $(".start").on("click", clearInstructions);
+  $(".start-button").on("click", showDay);
+}
+
+function clearInstructions() {
   itsANewDay();
   setupButtons();
-  $(".start-button").on("click", showDay);
+  $(".lemonade-stand-display").hide();
+  $(".user-input-screen").show();
+  $(".instructions").hide();
 }
 
 function itsANewDay(){
@@ -151,13 +161,13 @@ function getReportedWeather() {
 
   var random = Math.random();
 
-  if (random < 0.05) {
+  if (random < 0.03) {
     weatherReport = possibleWeather[0];
-  } else if (random >= 0.05 && random < 0.25) {
+  } else if (random >= 0.03 && random < 0.20) {
     weatherReport = 1;
-  } else if (random >= 0.25 && random < 0.55) {
+  } else if (random >= 0.20 && random < 0.50) {
     weatherReport = 2;
-  } else if (random >= 0.55 && random < 0.90) {
+  } else if (random >= 0.50 && random < 0.90) {
     weatherReport = 3;
   } else {
     weatherReport = possibleWeather[4];
@@ -198,7 +208,6 @@ function getActualWeather() {
     };
   }
   $(".day-animation").attr("id", "day-animation-" + weatherActual);
-  console.log("The weather is " + weatherActual)
 }
 
 function calculateCustomers() {
