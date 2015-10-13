@@ -37,7 +37,7 @@ p {
 }
 
 .day-animation {
-  background: url(../time-animation.gif), url(../hot.gif);
+  background: url(../time-animation.gif);
   background-repeat: no-repeat;
   background-color: #dbe2ed;
   width: 70%;
@@ -136,8 +136,6 @@ p {
   text-align: center;
   line-height: 55px;
 }
-
-
 
 .header-box {
   width: 70%;

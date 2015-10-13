@@ -51,109 +51,117 @@ var numOfCustomers  = 10,
     
     day = 1,
     
-    surplusSugar = 0,
+    surplusSugar = 0;
 
-    delay = 3150; //1 seconds
+    function setup() {
+      $(".lemonade-stand-display").hide();
+      $(".user-input-screen").hide();
+      $(".instructions").show();
+      $(".fail").hide();
+      $(".start").on("click", clearInstructions);
+      $(".start-button").on("click", showDay);
+    }
 
-function setup() {
-  $(".lemonade-stand-display").hide();
-  $(".user-input-screen").hide();
-  $(".instructions").show();
-  $(".start").on("click", clearInstructions);
-  $(".start-button").on("click", showDay);
-}
+    function clearInstructions() {
+      itsANewDay();
+      setupButtons();
+      $(".lemonade-stand-display").hide();
+      $(".user-input-screen").show();
+      $(".instructions").hide();
+      $(".fail").hide();
+    }
 
-function clearInstructions() {
-  itsANewDay();
-  setupButtons();
-  $(".lemonade-stand-display").hide();
-  $(".user-input-screen").show();
-  $(".instructions").hide();
-}
+    function itsANewDay(){
+      if (runningTotal < 0 || (runningTotal < 5000 && day === 6)) {
+        $(".lemonade-stand-display").hide();
+        $(".user-input-screen").hide();
+        $(".instructions").hide();
+        $(".fail").show();
+      }
 
-function itsANewDay(){
-  $(".lemonade-stand-display").hide();
-  $(".user-input-screen").show();
-  $(".instructions").hide();
+      else {
+        $(".lemonade-stand-display").hide();
+        $(".user-input-screen").show();
+        $(".instructions").hide();
+        $(".fail").hide();
 
-  ["lemon", "ice", "sugar"].forEach(function(element){
-    $("#input-"+element).text(0);
-  })
-  $("#input-price").text(50);
+        ["lemon", "ice", "sugar"].forEach(function(element){
+          $("#input-"+element).text(0);
+        })
+        $("#input-price").text(50);
 
-  getReportedWeather();
-}
+        getReportedWeather();
+      }
+    }
 
-function showDay() {
-  getActualWeather();
+    function showDay() {
+      getActualWeather();
 
-  iceQuantity          = parseInt($("#input-ice").text());
-  lemonsQuantity.fresh = parseInt($("#input-lemon").text());
-  sugarQuantity        = (surplusSugar / 20) + parseInt($("#input-sugar").text());
-  todaysPrice          = parseInt($(".price-input").text());
-  locationSelect       = getLocation();
+      iceQuantity          = parseInt($("#input-ice").text());
+      lemonsQuantity.fresh = parseInt($("#input-lemon").text());
+      sugarQuantity        = parseInt($("#input-sugar").text());
+      todaysPrice          = parseInt($(".price-input").text());
+      locationSelect       = getLocation();
 
-  setupStand();
+      setupStand();
 
-  $(".user-input-screen").hide();
-  $(".lemonade-stand-display").show();
-}
+      $(".user-input-screen").hide();
+      $(".lemonade-stand-display").show();
+    }
 
-function setupStand() {
-  $(".starting-num").text(runningTotal);
+    function setupStand() {
+      $(".starting-num").text(runningTotal);
 
-  iceCost        = iceStock();
-  lemonsCost     = lemonStock();
-  sugarCost      = sugarStock();
-  stockCost      = totalStock();
+      iceCost        = iceStock();
+      lemonsCost     = lemonStock();
+      sugarCost      = sugarStock();
+      stockCost      = totalStock();
 
-  makeLemonade();
+      makeLemonade();
 
-  numOfCustomers = calculateCustomers();
-  salesMade      = calculateSales();
+      numOfCustomers = calculateCustomers();
+      salesMade      = calculateSales();
 
-  $(".stock-num").text(stockCost);
-  $(".rent-num").text(rent);
+      $(".stock-num").text(stockCost);
+      $(".rent-num").text(rent);
 
-  runningTotal = calculateRunningTotal();
+      runningTotal = calculateRunningTotal();
 
-  setTimeout(function(){
-    $(".sales-num").text(salesMade);
-    $(".balance-num").text(runningTotal);
+      $(".sales-num").text(salesMade);
+      $(".balance-num").text(runningTotal);
 
-    $(".surplusL-num").text(lemonsQuantity.oneDay);
-    $(".surplusS-num").text(surplusSugar);
-  }, delay); 
+      $(".surplusL-num").text(lemonsQuantity.oneDay);
+      $(".surplusS-num").text(surplusSugar);
 
-  day++;
+      day++;
 
-  numOfCustomers = 10;
-  $(".end-day-button").on("click", itsANewDay)
-}
+      numOfCustomers = 10;
+      $(".end-day-button").on("click", itsANewDay)
+    }
 
-function calculateRunningTotal(){
-  return runningTotal - stockCost - rent + (salesMade * todaysPrice);
-}
+    function calculateRunningTotal(){
+      return runningTotal - stockCost - rent + (salesMade * todaysPrice);
+    }
 
-function setupButtons(){
-  setupButton("lemon", 1);
-  setupButton("ice", 1);
-  setupButton("sugar", 1);
-  setupButton("price", 10);
-}
+    function setupButtons(){
+      setupButton("lemon", 1);
+      setupButton("ice", 1);
+      setupButton("sugar", 1);
+      setupButton("price", 10);
+    }
 
-function setupButton(selector, increment) {
-  $("#decrement-"+selector).on("click", function() { 
-    var val = parseInt($("#input-"+selector).text());
-    val -= increment; 
-    $("#input-"+selector).text(val);
-  });
-  $("#increment-"+selector).on("click", function() {
-    var val = parseInt($("#input-"+selector).text());
-    val += increment; 
-    $("#input-"+selector).text(val); 
-  });
-}
+    function setupButton(selector, increment) {
+      $("#decrement-"+selector).on("click", function() { 
+        var val = parseInt($("#input-"+selector).text());
+        val -= increment; 
+        $("#input-"+selector).text(val);
+      });
+      $("#increment-"+selector).on("click", function() {
+        var val = parseInt($("#input-"+selector).text());
+        val += increment; 
+        $("#input-"+selector).text(val); 
+      });
+    }
 
 // ["stormy", "raining", "cloudy", "warm", "hot"]
 function getReportedWeather() {
@@ -216,21 +224,21 @@ function calculateCustomers() {
 
   switch (locationSelect) {
     case "D":
-      multiplier = 1
-      rent = 100;
-      break;    
+    multiplier = 1
+    rent = 100;
+    break;    
     case "Br":
-      multiplier = 1.5
-      rent = 300;
-      break;    
+    multiplier = 1.5
+    rent = 300;
+    break;    
     case "S":
-      multiplier = 2
-      rent = 500;
-      break;    
+    multiplier = 2
+    rent = 500;
+    break;    
     case "Bo":
-      multiplier = 2.5
-      rent = 900;
-      break;
+    multiplier = 2.5
+    rent = 900;
+    break;
   }
 
   numOfCustomers = multiplier * numOfCustomers;
@@ -257,7 +265,7 @@ function lemonStock(){
 }
 
 function sugarStock(){
-  return (sugarQuantity - (surplusSugar / 20)) * 100;
+  return (sugarQuantity) * 100;
 }
 
 function totalStock(){
@@ -268,9 +276,10 @@ function totalStock(){
 // 1 lemon makes 10 lemonade -> lemonsQuantity.fresh + lemonsQuantity.oneDay
 // 1 sugar makes 20 lemonade -> sugarQuantity
 function makeLemonade() {
+
   var ice     = iceQuantity;
   var lemons  = lemonsQuantity.fresh + lemonsQuantity.oneDay;
-  var sugar   = sugarQuantity + surplusSugar;
+  var sugar   = sugarQuantity;
 
   icePerLemonade    = 10;
   lemonsPerLemonade = 10;
@@ -286,6 +295,9 @@ function makeLemonade() {
   sugar       = (sugarLimit - maxLimit)/sugarPerLemonade;
 
   // Throw away the remaining old lemons
+  if (maxLimit < lemonsQuantity.oneDay) {
+    maxLimit - lemonsQuantity.oneDay
+  }
   if (maxLimit < lemonsQuantity.oneDay) {
     lemons -= (lemonsQuantity.oneDay - maxLimit);
   }
