@@ -147,7 +147,7 @@ function setupButton(selector, increment) {
 
 // ["stormy", "raining", "cloudy", "warm", "hot"]
 function getReportedWeather() {
-  $(".day-display").text("Day no." + day);
+  $(".day-display").text("Day no." + day + ".." + "Balance: " + runningTotal);
 
   var random = Math.random();
 
@@ -197,8 +197,8 @@ function getActualWeather() {
       }
     };
   }
-  $(".day-animation").text(weatherActual);
-  console.log("The weather today is " + weatherActual + ".")
+  $(".day-animation").attr("id", "day-animation-" + weatherActual);
+  console.log("The weather is " + weatherActual)
 }
 
 function calculateCustomers() {
