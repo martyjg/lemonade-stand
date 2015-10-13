@@ -66,6 +66,11 @@ function itsANewDay(){
   $(".user-input-screen").show();
   $(".instructions").hide();
 
+  ["lemon", "ice", "sugar"].forEach(function(element){
+    $("#input-"+element).text(0);
+  })
+  $("#input-price").text(50);
+
   getReportedWeather();
 }
 
@@ -212,6 +217,7 @@ function calculateCustomers() {
   }
 
   numOfCustomers = multiplier * numOfCustomers;
+  todaysPrice = parseInt($("#input-price").text());
 
   if (todaysPrice < 10) {
     numOfCustomers = numOfCustomers * 10;
@@ -219,7 +225,6 @@ function calculateCustomers() {
     numOfCustomers = 2;
   } else {
     multiplier = (100 / todaysPrice);
-    console.log(multiplier);
     numOfCustomers = multiplier * numOfCustomers;
   }
 
@@ -271,43 +276,7 @@ function makeLemonade() {
   iceQuantity           = 0;
   lemonsQuantity.fresh  = 0;
   lemonsQuantity.oneDay = lemons;
-  suplusSugar           = sugar;
-
-
-  // iceToLemonade = iceQuantity * 10;
-
-  // var fLemonsToLemonade = lemonsQuantity.fresh * 10;
-  // var oLemonsToLemonade = lemonsQuantity.oneDay * 10;
-  // lemonsToLemonade = fLemonsToLemonade + oLemonsToLemonade;
-  // sugarToLemonade = sugarQuantity * 20;
-
-  // if (iceToLemonade <= lemonsToLemonade && iceToLemonade <= sugarToLemonade) {
-  //   lemonadeProduced = iceToLemonade;
-  //   surplusLemons = oLemonsToLemonade - lemonadeProduced;
-  //   if (surplusLemons < 0) {
-  //     surplusLemons = surplusLemons + fLemonsToLemonade;
-  //     lemonsQuantity.fresh = surplusLemons / 10;
-  //   } else if (surplusLemons > 0) {
-  //     surplusLemons = surplusLemons + fLemonsToLemonade;
-  //   } else {
-  //     surplusLemons = fLemonsToLemonade
-  //   }
-  //   surplusSugar = sugarToLemonade - lemonadeProduced;
-  // } else if (lemonsToLemonade <= iceToLemonade && lemonsToLemonade <= sugarToLemonade) {
-  //   lemonadeProduced = lemonsToLemonade;
-  //   surplusSugar = sugarToLemonade - lemonadeProduced;
-  // } else {
-  //   lemonadeProduced = sugarToLemonade;
-  //   surplusLemons = oLemonsToLemonade - lemonadeProduced;
-  //   if (surplusLemons < 0) {
-  //     surplusLemons = surplusLemons + fLemonsToLemonade;
-  //     lemonsQuantity.fresh = surplusLemons / 10;
-  //   } else if (surplusLemons > 0) {
-  //     surplusLemons = surplusLemons + fLemonsToLemonade;
-  //   } else {
-  //     surplusLemons = fLemonsToLemonade
-  //   }
-  // }
+  surplusSugar          = sugar;
 }
 
 function calculateSales() {
@@ -319,6 +288,40 @@ function calculateSales() {
 
   return salesMade;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // function calculateSales() {
 //   if (lemonadeProduced >= numOfCustomers) {
