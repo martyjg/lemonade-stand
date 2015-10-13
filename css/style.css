@@ -37,8 +37,9 @@ p {
 }
 
 .day-animation {
-  background: url(../time-animation.gif);
-  background-color: #FFE130;
+  background: url(../time-animation.gif), url(../hot.gif);
+  background-repeat: no-repeat;
+  background-color: #dbe2ed;
   width: 70%;
   height: 25%;
   margin: 15px auto;
@@ -266,7 +267,7 @@ p {
   text-align: center;
 }
 
-.price-input {
+#input-price {
   margin: 0 5px;
   display: inline-block;
 }
