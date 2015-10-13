@@ -16,15 +16,19 @@ body {
   color: #3F5478;
 }
 
-.user-input-screen {
-  width: 480px;
-  height: 640px;
-  margin: 15px auto;
-  padding: 5px;
-  background-color: #8CBA80;
+header {
+  text-align: center;
+  font-size: 50px;
+  background-color: #FFE130;
+  margin: 10px;
 }
 
-.lemonade-stand-display {
+p {
+  font-family: verdana;
+}
+
+
+.user-input-screen, .lemonade-stand-display, .instructions {
   width: 480px;
   height: 640px;
   margin: 15px auto;
@@ -106,14 +110,30 @@ body {
   border: 4px solid #FF2ECC;
 }
 
-.end-day-button {
+.surplus-ingredients > * {
+  box-sizing: border-box;
+  float: left;
+  height: 50%;
+  border: 4px solid #FFE130;
+  padding: 2px;
+}
+
+.surplus-lemons, .surplus-sugar {
+  width: 70%;
+}
+
+.surplusL-num, .surplusS-num {
+  width: 30%;
+}
+
+.end-day-button, .start-button {
   box-sizing: border-box;
   width: 30%;
   height: 10%;
   margin: 30px auto;
   border: 6px solid #FFE130;
   text-align: center;
-  line-height: 65px;
+  line-height: 55px;
 }
 
 
@@ -138,15 +158,6 @@ body {
   height: 25%;
   margin: 15px auto;
   border: 6px solid #FFE130;
-}
-
-.start-button {
-  width: 30%;
-  height: 10%;
-  margin: 30px auto;
-  border: 6px solid #FFE130;
-  text-align: center;
-  line-height: 65px;
 }
 
 .header {

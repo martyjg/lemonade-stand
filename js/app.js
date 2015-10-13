@@ -15,9 +15,9 @@
 
 $(function() {
 
-  $(".user-input-screen").hide();
-  $(".lemonade-stand-display").show();
-
+  $(".instructions").hide();
+  $(".user-input-screen").show();
+  $(".lemonade-stand-display").hide();
 
   lemonade = {}
 
@@ -26,7 +26,9 @@ $(function() {
 
   possibleWeather = ["stormy", "raining", "cloudy", "warm", "hot"], reportDay,
 
-  iceQuantity, lemonsQuantity = {fresh: 0, oneDay: 0}, sugarQuantity, $todaysPrice,
+  iceQuantity, lemonsQuantity = {fresh: 0, oneDay: 0}, sugarQuantity,
+
+  $todaysPrice, todaysPrice,
 
   iceCost, lemonsCost, sugarCost, stockCost, morningTotal,
 
@@ -49,13 +51,50 @@ $(function() {
 
   addStartButton = function() {
     $(".start-button").on("click", function() {
+      getActualWeather();
+      //get location from options
+      if (day === 1) {
+        iceQuantity = parseInt($("#input-ice").text());
+        lemonsQuantity.fresh = parseInt($("#input-lemon").text());
+        sugarQuantity = parseInt($("#input-sugar").text());
+      }
+      todaysPrice = parseInt($(".price-input").text());
+
+      getLocation();
+
+      stockTotal();
+      calculateCustomers();
+      makeLemonade();
+      calculateSales();
+      setupStand();
       $(".user-input-screen").hide();
       $(".lemonade-stand-display").show();
     })
   }
 
+  setupStand = function() {
+    $(".starting-num").text(morningTotal);
+    $(".stock-num").text(stockCost);
+    $(".rent-num").text(rent);
+
+    //AFTER 3150 SECONDS LOAD THESE NUMBERS:
+    $(".sales-num").text(salesMade);
+    $(".balance-num").text(runningTotal);
+
+    $(".surplusL-num").text(lemonsQuantity.oneDay);
+    $(".surplusS-num").text(surplusSugar);
+
+    addEndButton();
+  }
+
+  addEndButton = function() {
+    $(".end-day-button").on("click", function() {
+      setup();
+    })
+  }
+
   addIncDecButtons = function() {
-    var $lemonNum = parseInt($("#input-lemon").text());
+    $lemonNum = parseInt($("#input-lemon").text());
     $("#decrement-lemon").on("click", function() {
       $lemonNum--
       $("#input-lemon").text($lemonNum);
@@ -64,7 +103,7 @@ $(function() {
       $lemonNum++
       $("#input-lemon").text($lemonNum)
     })
-    var $iceNum = parseInt($("#input-ice").text());
+    $iceNum = parseInt($("#input-ice").text());
     $("#decrement-ice").on("click", function() {
       $iceNum--
       $("#input-ice").text($iceNum)
@@ -73,7 +112,7 @@ $(function() {
       $iceNum++
       $("#input-ice").text($iceNum)
     })
-    var $sugarNum = parseInt($("#input-sugar").text());
+    $sugarNum = parseInt($("#input-sugar").text());
     $("#decrement-sugar").on("click", function() {
       $sugarNum--
       $("#input-sugar").text($sugarNum)
@@ -140,9 +179,26 @@ $(function() {
   };
 
   getLocation = function() {
-    locationSelect = prompt("where would you like to set up the lemonade stand today? (D)eptford Market: 100, (Br)ixton Market: 300, (S)pitalfields Market: 500, (Bo)rough Market: 900.");
-    stockTotal();
-  }
+    debugger
+
+    if ($('#D').is(':checked')) {
+      locationSelect = "D"
+    } else if ($('#Br').is(':checked')) {
+      locationSelect = "Br"
+    } else if ($('#S').is(':checked')) {
+      locationSelect = "S"
+    } else {
+      locationSelect = "Bo"
+    } 
+   //  $(".location-button").each(function(index) {
+   //    console.log($(".location-select").get(index));
+   //    if ($(".location-button").get(index).checked === true) {
+   //     locationSelect = $(".location-button").get(index).attr("id")
+   //   };
+   // })
+    console.log(locationSelect);
+  };
+
 
   getActualWeather = function() {
     var random = Math.random();
@@ -168,10 +224,10 @@ $(function() {
       };
     }
     console.log("The weather today is " + weatherActual + ".")
-    calculateCustomers();
   }
 
   calculateCustomers = function() {
+    debugger
     var multiplier = (possibleWeather.indexOf(weatherActual)) / 2;
     numOfCustomers = multiplier * numOfCustomers;
 
@@ -208,21 +264,18 @@ $(function() {
 
     numOfCustomers = Math.floor(numOfCustomers);
 
-    makeLemonade();
   }
 
 
-  getInitialStock = function() {
-    iceQuantity = parseInt(prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)"));
+  // getInitialStock = function() {
+  //   iceQuantity = parseInt(prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)"));
 
-    lemonsQuantity.fresh = parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
+  //   lemonsQuantity.fresh = parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
 
-    sugarQuantity = parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
+  //   sugarQuantity = parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
 
-    todaysPrice = parseInt(prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)"));
-
-    stockTotal();
-  }
+  //   todaysPrice = parseInt(prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)"));
+  // }
 
   stockTotal = function() {
     console.log("ice: " + iceQuantity + "kg")
@@ -243,7 +296,6 @@ $(function() {
     morningTotal = runningTotal - stockCost;
     console.log("You begin the day with a total of " + morningTotal + ".");
 
-    getActualWeather();
   }
 
   makeLemonade = function() {
@@ -280,11 +332,9 @@ $(function() {
         surplusLemons = fLemonsToLemonade
       }
     }
-    calculateSales();
   }
 
   calculateSales = function() {
-    debugger
     if (lemonadeProduced >= numOfCustomers) {
       salesMade = numOfCustomers;
     } else {
@@ -315,7 +365,6 @@ $(function() {
     iceQuantity = 0;
     lemonsQuantity.oneDay = lemonsQuantity.fresh
     lemonsQuantity.fresh = 0;
-    getReportedWeather();
   }
 
   surplusStock = function() {
@@ -331,7 +380,6 @@ $(function() {
       sugarQuantity =  (surplusSugar / 20) + parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
       todaysPrice = prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)");
     }
-    getLocation();
   }
 
 })

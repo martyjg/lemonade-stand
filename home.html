@@ -11,6 +11,15 @@
 
   <div class="screen-display">
 
+    <div class="instructions">
+      <header>LEMONADE &nbsp;&nbsp; STAND &nbsp;&nbsp; INSTRUCTIONS</header>
+      <p>Objective: You are heavily indebted to the students' loan company. You have just 6 days to accumulate 5000. Despite having a university degree you have no discernible skills apart from the ability to produce some tasty lemonade. Opening a lemonade stand is your only hope of survival.</p>
+
+      <section>Each day you must purchase lemons, ice and sugar to make the lemonade. Ice lasts only 1 day. Lemons last 2 days. Sugar does not expire.
+      You must also set the price of your lemonade daily. Too high and people will be less inclined to purchase. Too low and your profit will also be low.
+      Sales are also effect by the weather. Warmer weather increases sales. You must also select a location to set up your lemonade stand. More popular locations increase sales but cost a greater fee to yourself. </section>
+    </div>
+
     <div class="user-input-screen">
 
       <div class="header-box">
@@ -60,10 +69,10 @@
           </div>
         </div>
         <div class="location-input">
-          <Input type=radio class="D">Deptford</Input>
-          <Input type=radio class="Br">Brixton</Input>
-          <Input type=radio class="S">Shoreditch</Input>
-          <Input type=radio class="Bo">Borough</Input>
+          <input type="radio" name="location" class="location-button" id="D">Deptford</input>
+          <input type="radio" name="location" class="location-button" id="Br">Brixton</input>
+          <input type="radio" name="location" class="location-button" id="S">Shoreditch</input>
+          <input type="radio" name="location" class="location-button" id="Bo">Borough</input>
         </div>
       </div>
 
@@ -85,7 +94,7 @@
       </div>
 
       <div class="day-end-numbers">
-        <div class="total-sales">TOTAL SALES: </div>
+ "     " name="location"  <div class="total-sales">TOTAL SALES: </div>
         <div class="sales-num">20</div>
         <div class="ending-balance">ENDING BALANCE: </div>
         <div class="balance-num">1000</div>
@@ -93,7 +102,9 @@
 
       <div class="surplus-ingredients">
         <div class="surplus-lemons">SURPLUS LEMONS</div>
+        <div class="surplusL-num">0</div>
         <div class="surplus-sugar">SURPLUS SUGAR</div>
+        <div class="surplusS-num">0</div>
       </div>
 
       <div class="end-day-button">END DAY</div>
