@@ -22,7 +22,7 @@ $(function() {
   lemonade = {}
 
   var 
-  runningTotal = 1000, numOfCustomers = 10,
+  runningTotal, numOfCustomers = 10,
 
   possibleWeather = ["stormy", "raining", "cloudy", "warm", "hot"], reportDay,
 
@@ -30,11 +30,11 @@ $(function() {
 
   $todaysPrice, todaysPrice,
 
-  iceCost, lemonsCost, sugarCost, stockCost, morningTotal,
+  iceCost, lemonsCost, sugarCost, stockCost, salesMade,
 
   iceToLemonade, lemonsToLemonade, sugarToLemonade, lemonadeProduced,
 
-  locationSelect, rent,
+  locationSelect, rent, morningTotal = 1000,
 
   salesMade, moneyMade;
 
@@ -45,53 +45,78 @@ $(function() {
     $(".lemonade-stand-display").hide();
     $(".user-input-screen").show();
     getReportedWeather();
-    addIncDecButtons();
-    addStartButton();
+    if (day === 1) {
+      addIncDecButtons();
+      addStartButton();
+    }
   }
 
   addStartButton = function() {
     $(".start-button").on("click", function() {
       getActualWeather();
+
       //get location from options
       if (day === 1) {
         iceQuantity = parseInt($("#input-ice").text());
         lemonsQuantity.fresh = parseInt($("#input-lemon").text());
         sugarQuantity = parseInt($("#input-sugar").text());
+      } else {
+        iceQuantity = parseInt($("#input-ice").text());
+        lemonsQuantity.fresh = parseInt($("#input-lemon").text());
+        sugarQuantity =  (surplusSugar / 20) + parseInt($("#input-sugar").text());
       }
       todaysPrice = parseInt($(".price-input").text());
-
       getLocation();
-
-      stockTotal();
-      calculateCustomers();
-      makeLemonade();
-      calculateSales();
       setupStand();
       $(".user-input-screen").hide();
       $(".lemonade-stand-display").show();
     })
   }
 
+
   setupStand = function() {
-    $(".starting-num").text(morningTotal);
+    debugger
+    if (day === 1) {
+      $(".starting-num").text(morningTotal);
+    } else {
+      $(".starting-num").text(runningTotal);
+    }
+    stockTotal();
+    makeLemonade();
+    calculateCustomers();
+    calculateSales();
+
     $(".stock-num").text(stockCost);
     $(".rent-num").text(rent);
 
     //AFTER 3150 SECONDS LOAD THESE NUMBERS:
+    if (day === 1) {
+      runningTotal = morningTotal - stockCost - rent + (salesMade * todaysPrice);
+    } else {
+      runningTotal = runningTotal - stockCost - rent + (salesMade * todaysPrice);
+    }
+
     $(".sales-num").text(salesMade);
     $(".balance-num").text(runningTotal);
 
     $(".surplusL-num").text(lemonsQuantity.oneDay);
     $(".surplusS-num").text(surplusSugar);
 
+    day++;
+    numOfCustomers = 10;
+    iceQuantity = 0;
+    lemonsQuantity.oneDay = lemonsQuantity.fresh
+    lemonsQuantity.fresh = 0;
     addEndButton();
   }
+
 
   addEndButton = function() {
     $(".end-day-button").on("click", function() {
       setup();
     })
   }
+
 
   addIncDecButtons = function() {
     $lemonNum = parseInt($("#input-lemon").text());
@@ -178,8 +203,9 @@ $(function() {
     }
   };
 
+
+
   getLocation = function() {
-    debugger
 
     if ($('#D').is(':checked')) {
       locationSelect = "D"
@@ -190,12 +216,7 @@ $(function() {
     } else {
       locationSelect = "Bo"
     } 
-   //  $(".location-button").each(function(index) {
-   //    console.log($(".location-select").get(index));
-   //    if ($(".location-button").get(index).checked === true) {
-   //     locationSelect = $(".location-button").get(index).attr("id")
-   //   };
-   // })
+
     console.log(locationSelect);
   };
 
@@ -223,43 +244,43 @@ $(function() {
         }
       };
     }
+    $(".day-animation").text(weatherActual);
     console.log("The weather today is " + weatherActual + ".")
   }
 
   calculateCustomers = function() {
-    debugger
     var multiplier = (possibleWeather.indexOf(weatherActual)) / 2;
     numOfCustomers = multiplier * numOfCustomers;
 
-    if (day !== 1) {
-      switch (locationSelect) {
-        case "D":
-        multiplier = 1
-        rent = 100;
-        break;    
-        case "Br":
-        multiplier = 1.5
-        rent = 300;
-        break;    
-        case "S":
-        multiplier = 2
-        rent = 500;
-        break;    
-        case "Bo":
-        multiplier = 2.5
-        rent = 900;
-        break;
-      }
-
-      numOfCustomers = multiplier * numOfCustomers;
+    switch (locationSelect) {
+      case "D":
+      multiplier = 1
+      rent = 100;
+      break;    
+      case "Br":
+      multiplier = 1.5
+      rent = 300;
+      break;    
+      case "S":
+      multiplier = 2
+      rent = 500;
+      break;    
+      case "Bo":
+      multiplier = 2.5
+      rent = 900;
+      break;
     }
 
+    numOfCustomers = multiplier * numOfCustomers;
+
     if (todaysPrice < 10) {
-      numOfCustomers = numOfCustomers;
+      numOfCustomers = numOfCustomers * 10;
     } else if (todaysPrice > 100) {
       numOfCustomers = 2;
     } else {
-      numOfCustomers = (500 / todaysPrice);
+      multiplier = (100 / todaysPrice);
+      console.log(multiplier);
+      numOfCustomers = multiplier * numOfCustomers;
     }
 
     numOfCustomers = Math.floor(numOfCustomers);
@@ -278,6 +299,7 @@ $(function() {
   // }
 
   stockTotal = function() {
+    debugger
     console.log("ice: " + iceQuantity + "kg")
     console.log("Fresh lemons: " + lemonsQuantity.fresh + "kg. 1dayLemons: " + lemonsQuantity.oneDay + "kg")
     console.log("sugar: " + sugarQuantity + "kg")
@@ -293,8 +315,8 @@ $(function() {
 
     stockCost = iceCost + lemonsCost + sugarCost;
     console.log("You spent " + stockCost + " on stock today.")
-    morningTotal = runningTotal - stockCost;
-    console.log("You begin the day with a total of " + morningTotal + ".");
+    // morningTotal = runningTotal - stockCost;
+    // console.log("You begin the day with a total of " + morningTotal + ".");
 
   }
 
@@ -345,26 +367,21 @@ $(function() {
 
     console.log("You sold " + salesMade + " lemonades today. You have made " + moneyMade + ".")
 
-    if (day !== 1) {
-      console.log("You spent " + rent + " on rent today")
+    // if (day !== 1) {
+    //   console.log("You spent " + rent + " on rent today")
 
-      runningTotal = morningTotal + moneyMade - rent;
-    } else {
-      runningTotal = morningTotal + moneyMade;
-    }
+    //   runningTotal = morningTotal + moneyMade - rent;
+    // } else {
+    //   runningTotal = morningTotal + moneyMade;
+    // }
 
-    if (runningTotal < 0) {
-      console.log("Your balance is " + runningTotal + ". GAME OVER SORRY.")
-      return;
-    } else {
-      console.log("You have " + runningTotal + ".")
-    }
+    // if (runningTotal < 0) {
+    //   console.log("Your balance is " + runningTotal + ". GAME OVER SORRY.")
+    //   return;
+    // } else {
+    //   console.log("You have " + runningTotal + ".")
+    // }
 
-    day++;
-    numOfCustomers = 10;
-    iceQuantity = 0;
-    lemonsQuantity.oneDay = lemonsQuantity.fresh
-    lemonsQuantity.fresh = 0;
   }
 
   surplusStock = function() {
@@ -383,3 +400,5 @@ $(function() {
   }
 
 })
+
+

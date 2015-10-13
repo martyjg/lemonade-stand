@@ -221,6 +221,20 @@ p {
   background-position: center;
 }
 
+.ice-image {
+  height: 100%;
+  background: url(../ice.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.sugar-image {
+  height: 100%;
+  background: url(../sugar.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .lemonade-price-entry {
   width: 75%;
   height: 60%;
