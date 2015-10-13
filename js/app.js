@@ -57,7 +57,7 @@ var numOfCustomers  = 10,
 
 function setup() {
   itsANewDay();
-  addIncDecButtons();
+  setupButtons();
   $(".start-button").on("click", showDay);
 }
 
@@ -80,10 +80,9 @@ function showDay() {
   iceQuantity          = parseInt($("#input-ice").text());
   lemonsQuantity.fresh = parseInt($("#input-lemon").text());
   sugarQuantity        = (surplusSugar / 20) + parseInt($("#input-sugar").text());
-
   todaysPrice          = parseInt($(".price-input").text());
-
   locationSelect       = getLocation();
+
   setupStand();
 
   $(".user-input-screen").hide();
@@ -105,8 +104,8 @@ function setupStand() {
 
   $(".stock-num").text(stockCost);
   $(".rent-num").text(rent);
-  //AFTER 3150 SECONDS LOAD THESE NUMBERS:
-  runningTotal = runningTotal - stockCost - rent + (salesMade * todaysPrice);
+
+  runningTotal = calculateRunningTotal();
 
   setTimeout(function(){
     $(".sales-num").text(salesMade);
@@ -116,25 +115,34 @@ function setupStand() {
     $(".surplusS-num").text(surplusSugar);
   }, delay); 
 
-
   day++;
 
   numOfCustomers = 10;
   $(".end-day-button").on("click", itsANewDay)
 }
 
-function setupButton(selector, increment) {
-  var val = parseInt($("#input-"+selector).text());
-  $("#decrement-"+selector).on("click", function() { val -= increment; $("#input-"+selector).text(val); });
-  $("#increment-"+selector).on("click", function() { val += increment; $("#input-"+selector).text(val); });
+function calculateRunningTotal(){
+  return runningTotal - stockCost - rent + (salesMade * todaysPrice);
 }
 
-
-function addIncDecButtons() {
+function setupButtons(){
   setupButton("lemon", 1);
   setupButton("ice", 1);
   setupButton("sugar", 1);
   setupButton("price", 10);
+}
+
+function setupButton(selector, increment) {
+  $("#decrement-"+selector).on("click", function() { 
+    var val = parseInt($("#input-"+selector).text());
+    val -= increment; 
+    $("#input-"+selector).text(val);
+  });
+  $("#increment-"+selector).on("click", function() {
+    var val = parseInt($("#input-"+selector).text());
+    val += increment; 
+    $("#input-"+selector).text(val); 
+  });
 }
 
 // ["stormy", "raining", "cloudy", "warm", "hot"]
@@ -199,21 +207,21 @@ function calculateCustomers() {
 
   switch (locationSelect) {
     case "D":
-    multiplier = 1
-    rent = 100;
-    break;    
+      multiplier = 1
+      rent = 100;
+      break;    
     case "Br":
-    multiplier = 1.5
-    rent = 300;
-    break;    
+      multiplier = 1.5
+      rent = 300;
+      break;    
     case "S":
-    multiplier = 2
-    rent = 500;
-    break;    
+      multiplier = 2
+      rent = 500;
+      break;    
     case "Bo":
-    multiplier = 2.5
-    rent = 900;
-    break;
+      multiplier = 2.5
+      rent = 900;
+      break;
   }
 
   numOfCustomers = multiplier * numOfCustomers;
@@ -280,102 +288,6 @@ function makeLemonade() {
 }
 
 function calculateSales() {
-  if (maxLimit >= numOfCustomers) {
-    salesMade = numOfCustomers;
-  } else {
-    salesMade = maxLimit;
-  }
-
-  return salesMade;
+  if (maxLimit >= numOfCustomers) return numOfCustomers;
+  return maxLimit;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function calculateSales() {
-//   if (lemonadeProduced >= numOfCustomers) {
-//     salesMade = numOfCustomers;
-//   } else {
-//     salesMade = lemonadeProduced;
-//   }
-
-//   moneyMade = salesMade * todaysPrice;
-
-//   console.log("You sold " + salesMade + " lemonades today. You have made " + moneyMade + ".")
-
-//   // if (day !== 1) {
-//   //   console.log("You spent " + rent + " on rent today")
-
-//   //   runningTotal = morningTotal + moneyMade - rent;
-//   // } else {
-//   //   runningTotal = morningTotal + moneyMade;
-//   // }
-
-//   // if (runningTotal < 0) {
-//   //   console.log("Your balance is " + runningTotal + ". GAME OVER SORRY.")
-//   //   return;
-//   // } else {
-//   //   console.log("You have " + runningTotal + ".")
-//   // }
-
-// }
-
-// surplusStock = function() {
-//   console.log(" At the end of the day, there is " + lemonsQuantity.fresh + " fresh lemons and " + lemonsQuantity.oneDay + " day old lemons.") 
-//   console.log("There is " + sugarQuantity + " sugar and " + iceQuantity + " ice.") 
-//   if (day === 1) {
-//     return;
-//   } else {
-//     console.log("You have enough surplus lemons from yesterday to produce " + surplusLemons + " glasses of lemonade.")
-//     console.log("You have enough surplus sugar from yesterday to produce " + surplusSugar + " glasses of lemonade.")
-//     iceQuantity = parseInt(prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)"));
-//     lemonsQuantity.fresh = parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
-//     sugarQuantity =  (surplusSugar / 20) + parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
-//     todaysPrice = prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)");
-//   }
-// }
-
-
-// getInitialStock = function() {
-//   iceQuantity = parseInt(prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)"));
-
-//   lemonsQuantity.fresh = parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
-
-//   sugarQuantity = parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
-
-//   todaysPrice = parseInt(prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)"));
-// }
-
-
-
