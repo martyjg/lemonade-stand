@@ -384,20 +384,20 @@ $(function() {
 
   }
 
-  surplusStock = function() {
-    console.log(" At the end of the day, there is " + lemonsQuantity.fresh + " fresh lemons and " + lemonsQuantity.oneDay + " day old lemons.") 
-    console.log("There is " + sugarQuantity + " sugar and " + iceQuantity + " ice.") 
-    if (day === 1) {
-      return;
-    } else {
-      console.log("You have enough surplus lemons from yesterday to produce " + surplusLemons + " glasses of lemonade.")
-      console.log("You have enough surplus sugar from yesterday to produce " + surplusSugar + " glasses of lemonade.")
-      iceQuantity = parseInt(prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)"));
-      lemonsQuantity.fresh = parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
-      sugarQuantity =  (surplusSugar / 20) + parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
-      todaysPrice = prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)");
-    }
-  }
+  // surplusStock = function() {
+  //   console.log(" At the end of the day, there is " + lemonsQuantity.fresh + " fresh lemons and " + lemonsQuantity.oneDay + " day old lemons.") 
+  //   console.log("There is " + sugarQuantity + " sugar and " + iceQuantity + " ice.") 
+  //   if (day === 1) {
+  //     return;
+  //   } else {
+  //     console.log("You have enough surplus lemons from yesterday to produce " + surplusLemons + " glasses of lemonade.")
+  //     console.log("You have enough surplus sugar from yesterday to produce " + surplusSugar + " glasses of lemonade.")
+  //     iceQuantity = parseInt(prompt("How many kilograms of ice would you like to purchase? (1kg costs 100 and makes 10 glasses of lemonade. Ice will melt after 1 day.)"));
+  //     lemonsQuantity.fresh = parseInt(prompt("How many kilograms of lemons would you like to purchase? (1kg costs 200 and makes 10 glasses of lemonade. Lemons are unusable after 2 days.)"));
+  //     sugarQuantity =  (surplusSugar / 20) + parseInt(prompt("How many kilograms of sugar would you like to purchase? (1kg costs 100 and makes 20 glasses of lemonade. Sugar lasts forever.)"));
+  //     todaysPrice = prompt("What price would you like to set for your lemonade today? (The local average for chilled non-alcoholic beverages is 80)");
+  //   }
+  // }
 
 })
 
