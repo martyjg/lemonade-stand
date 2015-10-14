@@ -27,7 +27,7 @@ After a a day of sales, the player is presented with their financial breakdown (
 The game can currently continue as long as the player can keep their balance above zero.
 
 
-### The build
+### The build ![alt text][logo2]
 
 HTML5, CSS and javascript along with a jQuery library were used to build this game.
 The graphics and animation were created in GIMP.
@@ -43,3 +43,5 @@ I learnt a great deal from building this game and had a chance to practice my st
 Lemonade Stand has a lot of potential for future builds, I would like to implement options and challenges for the player including an interaction effect between the variables that decide the daily sales (e.g. an indoor location is less effected by wet weather conditions or that in certain locations, customers are willing to pay more for the lemonade).
 
 [logo]: https://github.com/martyjg/lemonade-stand/blob/master/lemonade.png "Lemonade graphic"
+[logo2]: https://github.com/martyjg/lemonade-stand/blob/master/lemon.png "lemon graphic"
+
