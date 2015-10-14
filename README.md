@@ -1,2 +1,2 @@
-# lemonade-stand
-First WDI project
+Lemonade Stand
+
