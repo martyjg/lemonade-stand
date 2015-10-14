@@ -296,9 +296,6 @@ function makeLemonade() {
 
   // Throw away the remaining old lemons
   if (maxLimit < lemonsQuantity.oneDay) {
-    maxLimit - lemonsQuantity.oneDay
-  }
-  if (maxLimit < lemonsQuantity.oneDay) {
     lemons -= (lemonsQuantity.oneDay - maxLimit);
   }
 
