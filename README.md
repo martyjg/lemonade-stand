@@ -1,4 +1,5 @@
-![alt text](https://github.com/martyjg/lemonade-stand/blob/master/lemonade.png "Lemonade graphic")# Lemonade Stand(https://github.com/martyjg/lemonade-stand/blob/master/lemonade.png)
+# Lemonade Stand
+![alt text][logo]![alt text][logo]![alt text][logo]
 ### GA WDI London - Project 1
 
 You are tasked with opened and managaing a lemonade stand.
@@ -40,3 +41,5 @@ I learnt a great deal from building this game and had a chance to practice my st
 ### Further developments
 
 Lemonade Stand has a lot of potential for future builds, I would like to implement options and challenges for the player including an interaction effect between the variables that decide the daily sales (e.g. an indoor location is less effected by wet weather conditions or that in certain locations, customers are willing to pay more for the lemonade).
+
+[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Lemonade graphic"
