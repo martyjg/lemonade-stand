@@ -33,15 +33,17 @@ HTML5, CSS and javascript along with a jQuery library were used to build this ga
 The graphics and animation were created in GIMP.
 The featured font is ARCADECLASSIC.TFF.
 
-### Problems and Challenges
+### Problems and Challenges ![alt text][logo3]
 
 I learnt a great deal from building this game and had a chance to practice my styling. Maintaining and presenting surplus stock from the previous day was a challenge for myself and it's something I would to develop further as part of the game design.
 
 
-### Further developments
+### Further developments ![alt text][logo4]
 
 Lemonade Stand has a lot of potential for future builds, I would like to implement options and challenges for the player including an interaction effect between the variables that decide the daily sales (e.g. an indoor location is less effected by wet weather conditions or that in certain locations, customers are willing to pay more for the lemonade).
 
 [logo]: https://github.com/martyjg/lemonade-stand/blob/master/lemonade.png "Lemonade graphic"
 [logo2]: https://github.com/martyjg/lemonade-stand/blob/master/lemon.png "lemon graphic"
+[logo3]: https://github.com/martyjg/lemonade-stand/blob/master/ice.png "ice graphic"
+[logo4]: https://github.com/martyjg/lemonade-stand/blob/master/sugar.png "sugar graphic"
 
