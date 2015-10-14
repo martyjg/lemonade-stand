@@ -1,4 +1,4 @@
-# Lemonade Stand
+https://github.com/martyjg/lemonade-stand/blob/master/lemonade.png# Lemonade Standhttps://github.com/martyjg/lemonade-stand/blob/master/lemonade.png
 ### GA WDI London - Project 1
 
 You are tasked with opened and managaing a lemonade stand.
