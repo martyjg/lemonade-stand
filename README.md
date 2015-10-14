@@ -12,3 +12,4 @@ The player must also choose a location where they will set up their stand for th
 Upon setting these variables, the player is ready to start their day of sales.
 
 
+![alt text](https://github.com/martyjg/lemonade-stand/blob/master/Screen-Shot-Lemonade-1.jpg "Screen 1 for Lemonade Stand")
