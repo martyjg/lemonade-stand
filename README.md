@@ -1,6 +1,7 @@
 # Lemonade Stand
 ![alt text][logo]![alt text][logo]![alt text][logo]
 ### GA WDI London - Project 1
+[Play LemonadeStand!](http://lemonade-stand-game.herokuapp.com/)
 
 You are tasked with opened and managaing a lemonade stand.
 
